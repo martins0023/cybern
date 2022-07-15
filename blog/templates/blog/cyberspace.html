@@ -1,0 +1,296 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="TemplateMo">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    {% if title %}
+    <title> {{ title }}</title>
+    {% else %}
+    <title>X_-_C </title>
+    {% endif%}
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'blog/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="{% static 'blog/assets/css/fontawesome.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/assets/css/templatemo-finance-business.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/assets/css/owl.css' %}">
+<!--
+
+cybern
+-->
+  </head>
+
+  <body>
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>  
+    <!-- ***** Preloader End ***** -->
+
+    <!-- Header -->
+
+    <div class="sub-header">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 col-xs-12">
+            <ul class="left-info">
+              <li><a href=""><i class="fa fa-phone"> call-us</i></a></li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <ul class="right-icons">
+                <li><a href="https://www.facebook.com/xcybern"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="https://www.twitter.com/xcybern"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="https://www.linkedin.com/xcybern"><i class="fa fa-linkedin"></i></a></li>
+                <li><a href="https://www.instagram.com/xcybern.dev"><i class="fa fa-instagram"></i></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+   
+    <header class="">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <a class="navbar-brand" href="/"><h2>X_-_C</h2></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="/">Home
+                  <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'cyberspace' %}">Cyber Space</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'discuss_space' %}">Discussion</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'contact' %}">Contact Us</a>
+              </li>
+              <li {% if request.resolver_match.url_name == 'about' %} class="nav-item active" {% endif %}>
+                <a class="nav-link" href="{% url 'about'%}">About Us</a>
+              </li>
+              {% if user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'profile'%}">Profile</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout'%}">Logout</a>
+              </li>
+              {% else %}
+              <li class="nav-item dropdown" >
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Login </a>
+                <div class="dropdown-menu" aria-labelledby="dropdown-a">
+                  <a class="dropdown-item" {% if request.resolver_match.url_name == 'login' %} class="nav-item active" {% endif %} href="{% url 'login'%}">Login </a>
+                  <a class="dropdown-item" {% if request.resolver_match.url_name == 'register' %} class="nav-item active" {% endif %} href="{% url 'register'%}">Register </a>
+                </div>
+              </li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Page Content -->
+    <div class="page-heading header-text">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1>Our Cyber Space</h1>
+            <span>You being curious about what our cyber space space entails?</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="single-services">
+      <div class="container">
+        <div class="row" id="tabs">
+          <div class="col-md-4">
+            <ul>
+              {% for cyberspace in cyberspaces%}
+              <li><a href='#tabs-{{ cyberspace.id }}'>{{ cyberspace.title }}<i class="fa fa-angle-right"></i></a></li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="col-md-8">
+            <section class='tabs-content'>
+              {% for cyberspace in cyberspaces%}
+              <article id='tabs-{{ cyberspace.id }}'>
+                <img src="{{ cyberspace.image.url }}" alt="">
+                <h4>{{ cyberspace.title }}</h4>
+                <p>{{ cyberspace.content }}</p>
+                <blockquote>
+                  <span class="mb-4">credit:</span>
+                  {{ cyberspace.credit }}
+                </blockquote>
+              </article>
+              {% endfor %}
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callback-form callback-services">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="section-heading">
+              <h2>Request a <em>call back</em></h2>
+              <span>interdum nisl ac urna tempor mollis</span>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="contact-form">
+              <form id="contact" action="" method="post">
+                {% csrf_token %}
+                <div class="row">
+                  <div class="col-lg-4 col-md-12 col-sm-12">
+                    <fieldset>
+                      {{ form_name|crispy }}
+                    </fieldset>
+                  </div>
+                  <div class="col-lg-4 col-md-12 col-sm-12">
+                    <fieldset>
+                      {{ form_email|crispy }}
+                    </fieldset>
+                  </div>
+                  <div class="col-lg-4 col-md-12 col-sm-12">
+                    <fieldset>
+                      {{ form_subject|crispy }}
+                    </fieldset>
+                  </div>
+                  <div class="col-lg-12">
+                    <fieldset>
+                      {{ form_message|crispy }}
+                    </fieldset>
+                  </div>
+                  <div class="col-lg-12">
+                    <fieldset>
+                      <button type="submit" id="form-submit" class="border-button">Send Message</button>
+                    </fieldset>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="partners">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="owl-partners owl-carousel">
+              <div class="partner-item">
+                <img src="{% static 'blog/assets/images/client-01.png' %}" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Footer Starts Here -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3 footer-item">
+            <h4>X_-_C</h4>
+            <p>Making awareness about recent threat of how people are getting defrauded each day.</p>
+            <ul class="social-icons">
+              <li><a rel="nofollow" href="" target="_blank"><i class="fa fa-facebook"></i></a></li>
+              <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+              <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+              <li><a href="#"><i class="fa fa-behance"></i></a></li>
+            </ul>
+          </div>
+          <div class="col-md-3 footer-item">
+            <h4>Useful Links</h4>
+            <ul class="menu-list">
+              {% for link in links %}
+              <li><a href=" {{ link.link }} "><u> {{ link.title }} </u></a></li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="col-md-3 footer-item">
+            <h4>Additional Pages</h4>
+            <ul class="menu-list">
+              <li><a href="{% url 'about' %}">About Us</a></li>
+              <li><a href="{% url 'about' %}">How We Work</a></li>
+              <li><a href="{% url 'contact' %}">Quick Support</a></li>
+              <li><a href="{% url 'contact' %}">Contact Us</a></li>
+              <li><a href="{% url 'about' %}">Privacy Policy</a></li>
+            </ul>
+          </div>
+          <div class="col-md-3 footer-item">
+            <h4>Product</h4>
+            <ul class="menu-list">
+              <p><a href="#">coming soon..</a></p>
+            </ul>
+          </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    
+    <div class="sub-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <p>Copyright &copy; 2022 - <script>document.write(new Date().getFullYear());</script> CYBERN
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{% static 'blog/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'blog/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Additional Scripts -->
+    <script src="{% static 'blog/assets/js/custom.js' %}"></script>
+    <script src="{% static 'blog/assets/js/owl.js' %}"></script>
+    <script src="{% static 'blog/assets/js/slick.js' %}"></script>
+    <script src="{% static 'blog/assets/js/accordions.js' %}"></script>
+    <script src="{% static 'blog/assets/js/customhack.js' %}"></script>
+
+    <script language = "text/Javascript"> 
+      cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+      function clearField(t){                   //declaring the array outside of the
+      if(! cleared[t.id]){                      // function makes it static and global
+          cleared[t.id] = 1;  // you could use true and false, but that's more typing
+          t.value='';         // with more chance of typos
+          t.style.color='#fff';
+          }
+      }
+    </script>
+
+  </body>
+</html>
